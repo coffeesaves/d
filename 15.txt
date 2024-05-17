@@ -1,0 +1,52 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define N 4
+
+// A utility function to count inversions in given array 'arr[]'
+int getInvCount(int arr[]) {
+    int inv_count = 0;
+    for (int i = 0; i < N * N - 1; i++) {
+        for (int j = i + 1; j < N * N; j++) {
+            // Value 0 is used for empty space
+            if (arr[j] && arr[i] && arr[i] > arr[j])
+                inv_count++;
+        }
+    }
+    return inv_count;
+}
+
+// This function returns true if given 15 puzzle is solvable.
+int isSolvable(int puzzle[N][N]) {
+    int invCount = getInvCount((int *)puzzle);
+    return (invCount % 2 == 0);
+}
+
+// A utility function to print matrix
+void printMatrix(int puzzle[N][N]) {
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++)
+            printf("%d ", puzzle[i][j]);
+        printf("\n");
+    }
+}
+
+int main() {
+    int puzzle[N][N];
+
+    // Take user input for initial puzzle state
+    printf("Enter the initial state of the puzzle (0 represents the empty space):\n");
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            scanf("%d", &puzzle[i][j]);
+        }
+    }
+
+    // Check if the puzzle is solvable
+    if (isSolvable(puzzle))
+        printf("Solvable\n");
+    else
+        printf("Not Solvable\n");
+
+    return 0;
+}
